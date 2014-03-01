@@ -33,14 +33,25 @@
         
         //Build row actions
         $actions = array(
-            'skills'      => sprintf('<a href="javascript:AnythingPopup();">Skills</a>'),
-            'motivation'    => sprintf('<a href="javascript:void(0);">Motivation</a>'),
+            'skills'      => sprintf('<a href="javascript:void(0);" class="popper" data-popbox="savi_skill_%1$s">Skills</a>'),
+            'motivation'    => sprintf('<a href="javascript:void(0);" class="popper" data-popbox="savi_motiv_%1$s">Motivation</a>'),
         );
-        
+        $hidden_div = sprintf('
+        	<div id="savi_skill_%1$s" class="popbox">
+			    <h2>Skills</h2>
+			    <p>This is a skill.</p>
+			</div>
+			<div id="savi_motiv_%1$s" class="popbox">
+			    <h2>Motivation</h2>
+				<p>This is the motivation</p>
+			</div>',
+        	$item['ID']);
         //Return the title contents
-        return sprintf('<span style="color:silver">%1$s</span>',
-            /*$1%s*/ $this->row_actions($actions)
-        );
+        return sprintf('
+        	%1$s
+        	<span style="color:silver">%2$s</span>',
+            $hidden_div,
+            $this->row_actions($actions));
     }
     function column_cb($item){
         return sprintf(
